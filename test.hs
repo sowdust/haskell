@@ -23,12 +23,75 @@ lastd ::  Integral a => a -> a
 lastd1 ::  Integral a => a -> a
 nnulltail ::  Integral a => a -> a
 factc ::  (Eq a, Num a) => a -> (a -> t) -> t
+fibo ::  Integer -> Integer
+f1 ::  Integer -> [Integer]
+f2 ::  Integer -> [Integer]
+f3 ::  Integer -> [Integer]
 
 
 
 bottom = bottom
 
+fibo n = aux 0 1 n
+    where
+        aux :: Integer -> Integer -> Integer -> Integer
+        aux m _ 0 = m
+        aux _ n 1 = n
+        aux m n k = aux n (m + n) (k-1)
 
+
+
+
+{-
+fi n = [1,2,...,n]
+f2 n = [n,n-1,n-2,....,1]
+f3 n = [p1,p2,....,pk] dove p sono divisori di n
+-}
+
+
+f2 0 = []
+f2 n = n:(f2 (n-1))
+
+f1 = reverse . f2
+
+f3  n   =   n:aux (n `div` 2)
+    where
+        aux 1   =   [1]
+        aux b   |  n `mod` b == 0    =   b:(aux (b-1))
+                |  otherwise    =   aux (b-1)
+
+
+
+primo :: Integer -> Bool
+primo n = n > 1 && noDivisori (div n 2)
+    where 
+        noDivisori :: Integer -> Bool
+        noDivisori 1 = True
+        noDivisori k = n `mod` k /= 0 && noDivisori (k-1)
+
+pow _ 0 =   1
+pow a n |   n `mod` 2 == 0   =   b*b
+        |   otherwise       =   a*b*b
+    where
+        b = a `pow` (n `div` 2)
+
+powm _ 0    =   (1,0,0,1)
+powm a n    |   n `mod` 2 == 0   = b `times` b
+            |   otherwise       = a `times` (b `times` b)
+    where
+        b = a `powm` (n `div` 2)
+
+
+fibo_log n =    snd4 ( powm (1,1,1,0) n)
+    where       snd4 (_,x,_,_) = x
+
+{-
+    a b     k l    =      a*k + b*m     a*l + b*n
+    c d  X  m n           c*k + d*m     c*l + d* n
+-}
+
+times ::  Num t => (t, t, t, t) -> (t, t, t, t) -> (t, t, t, t)
+times (a,b,c,d) (k,l,m,n) = (a*k+b*m,a*l+b*n,c*k+d*m,c*l+d*n)
 
 cross(f, g)(x, y) = (f x, g y)
 left (x , y ) = x
@@ -91,7 +154,7 @@ last_d n	| n == 0 = 0
 		r = mod n 10
 
 divide 0 _ = False
-divide m n = n `mod` m == 0
+ivide m n = n `mod` m == 0
 
 mcd 0 n =	n
 mcd m n |	m < n =	mcd n m
