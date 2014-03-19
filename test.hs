@@ -18,11 +18,16 @@ add	:: Nat -> Nat -> Nat
 mult	:: Nat -> Nat -> Nat
 eleva	:: Nat -> Nat -> Nat
 foldn 	:: (Eq a, Num a) => (t -> t) -> t -> a -> t
-factc 	:: (Eq a, Num a) => a -> (a -> t) -> t
+last_d ::  Integral a => a -> a
+lastd ::  Integral a => a -> a
+lastd1 ::  Integral a => a -> a
+nnulltail ::  Integral a => a -> a
+factc ::  (Eq a, Num a) => a -> (a -> t) -> t
 
 
 
 bottom = bottom
+
 
 
 cross(f, g)(x, y) = (f x, g y)
@@ -59,9 +64,6 @@ fact n = n * fact (n-1)
 factc 0 c = c 1
 factc n c = factc n ( \x -> c( (n+1) * x) )
 
-fibit 0 = 1
-fibit 1 = 1
-fib n = 
 --fact n =	if n == 0 then 1
 --			else n * fact (n-1)
 
