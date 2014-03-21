@@ -1,11 +1,14 @@
 {-# LANGUAGE UnicodeSyntax #-}
+
 import Data.Char (chr, ord)
+import MyList
+
 
 -- il costrutto let _ e' un espressione
 -- il costrutto where puo' essere usato solo in definizioni di funzioni
 
 divide	:: Integer -> Integer -> Bool
-cross	:: (a -> a1, b -> b1) -> (a, b) -> (a1, b1) 
+cross	:: (a -> a1, b -> b1) -> (a, b) -> (a1, b1)
 chop	:: [a] -> [a]
 qsort	:: (Ord a) => [a] -> [a]
 hyp	:: Float -> Float -> Float
@@ -14,7 +17,7 @@ lower	:: Char -> Char
 upper	:: Char -> Char
 fact	:: Integer -> Integer
 mcd	:: Integer -> Integer -> Integer
-add	:: Nat -> Nat -> Nat 
+add	:: Nat -> Nat -> Nat
 mult	:: Nat -> Nat -> Nat
 eleva	:: Nat -> Nat -> Nat
 foldn 	:: (Eq a, Num a) => (t -> t) -> t -> a -> t
@@ -81,7 +84,7 @@ f3  n   =   n:aux (n `div` 2)
 --  aux corrisponde al ciclo while
 forward n = aux [] n
     where
-    aux l n |   n == 0       =   l   
+    aux l n |   n == 0       =   l
             |   otherwise   =   aux (n : l) (n-1)
 
 {-
@@ -103,7 +106,7 @@ backward n = aux [] 1
 
 primo :: Integer -> Bool
 primo n = n > 1 && noDivisori (div n 2)
-    where 
+    where
         noDivisori :: Integer -> Bool
         noDivisori 1 = True
         noDivisori k = n `mod` k /= 0 && noDivisori (k-1)
@@ -156,7 +159,7 @@ fib n = fib (n-1) + fib (n-2)
 
 lower c | c >= 'A' && c <= 'Z' = chr (ord c - ord 'A' + ord 'a')
 	| otherwise = c
-	
+
 upper c | c >= 'a' && c <= 'z' = chr (ord c - ord 'a' + ord 'A')
 	| otherwise = c
 
@@ -239,69 +242,6 @@ eleva a (Succ n)	= (mult . eleva a) n a
 foldn f a 0 	= a
 foldn f a n 	= f (foldn f a (n-1))
 
-
-
-
-
-
---  LISTE
-
-
-
-
-myLength :: [a] -> Integer
-myLength [] = 0
-myLength (_ : xs) = 1 + myLength xs
-
-append :: [a] -> [a] -> [a]
-append [] ys = ys
-append (x : xs) ys = x : append xs ys
-
-myHead (x:_) = x
-
-contains ::  Eq a => a -> [a] -> Bool
-contains n []       =   False
-contains n (x:xs)   |   x == n       =   True
-                    |   otherwise   =   contains n xs
-
-myReverse :: [a] -> [a]
-myReverse []        =   []
-myReverse (x:xs)    =   myReverse xs ++ [x]
-
-myTail :: [a] -> [a]
-myTail []           =   []
-myTail (x:xs)       =   xs
-
-myConcat :: [[a]] -> [a]
-myConcat [x]    = x
-myConcat (x:xs) = x ++ (myConcat xs)
-
-myNElem :: [a] -> Int -> a
-myNElem l n =   aux l 1
-    where
-    aux (x:xs) c  |   (c == n)    =   x
-                  |   (c < n)    =   aux xs (c+1)
-
-myOrd :: (Ord a) => [a] -> Bool
-myOrd []        =   True
-myOrd (x:xs)    =   aux x xs
-    where
-    aux _ []        =   True
-    aux _ [a]       =   True
-    aux l (a:as)    |   (l <= a)     =   aux a as
-                    |   otherwise   =   False
-
-myNull :: [a] -> Bool
-myNull  []  =   True
-myNull  x   =   False
-
-{-
- - sommare tutti gli elementi di una lista di interi
- - trovare l'elemento piu' grande di una lista di interi
- - eliminare gli elementi dupplicati da una lista ordinata
- - eliminare gli elementi duplicati (suggeriment: usare elem)
- - fare la take e la drop
- -}
 
 
 
