@@ -49,16 +49,55 @@ f3 n = [p1,p2,....,pk] dove p sono divisori di n
 -}
 
 
+-- f2 complessita' costante in tempo perche' (:) costante
+-- lineare anche in spazio perche' ricorsione non e' in coda e quindi
+-- si caricano n frame sullo stack - non puo' essere trasformato in iterativo
 f2 0 = []
 f2 n = n:(f2 (n-1))
 
 f1 = reverse . f2
 
+--- f12 complessita' quadratica perche' (++) lineare
+f12 ::  (Eq a, Num a) => a -> [a]
+f12 0 = []
+f12 n = f12 (n-1) ++ [n]
+
 f3  n   =   n:aux (n `div` 2)
     where
-        aux 1   =   [1]
-        aux b   |  n `mod` b == 0    =   b:(aux (b-1))
-                |  otherwise    =   aux (b-1)
+    aux 1   =   [1]
+    aux b   |  n `mod` b == 0    =   b:(aux (b-1))
+            |  otherwise        =   aux (b-1)
+
+{-
+ - IMPLEMENTAZIONE F.NI SU LISTE IN MODO ITERATIVO
+ -
+ - l = []
+ - while (n > 0) {
+ -  l = n : l;
+ -  n = n - 1;
+ - }
+ -
+ -}
+--  aux corrisponde al ciclo while
+forward n = aux [] n
+    where
+    aux l n |   n == 0       =   l   
+            |   otherwise   =   aux (n : l) (n-1)
+
+{-
+ - l = []
+ - m = 0
+ - while (m < = n) {
+ -  l = n : l
+ -  n = n + 1
+ - }
+ -}
+
+backward n = aux [] 1
+    where
+    aux l k |   k > n       =   l
+            |   otherwise    =   aux (k : l) (k+1)
+
 
 
 
@@ -199,6 +238,72 @@ eleva a (Succ n)	= (mult . eleva a) n a
 
 foldn f a 0 	= a
 foldn f a n 	= f (foldn f a (n-1))
+
+
+
+
+
+
+--  LISTE
+
+
+
+
+myLength :: [a] -> Integer
+myLength [] = 0
+myLength (_ : xs) = 1 + myLength xs
+
+append :: [a] -> [a] -> [a]
+append [] ys = ys
+append (x : xs) ys = x : append xs ys
+
+myHead (x:_) = x
+
+contains ::  Eq a => a -> [a] -> Bool
+contains n []       =   False
+contains n (x:xs)   |   x == n       =   True
+                    |   otherwise   =   contains n xs
+
+myReverse :: [a] -> [a]
+myReverse []        =   []
+myReverse (x:xs)    =   myReverse xs ++ [x]
+
+myTail :: [a] -> [a]
+myTail []           =   []
+myTail (x:xs)       =   xs
+
+myConcat :: [[a]] -> [a]
+myConcat [x]    = x
+myConcat (x:xs) = x ++ (myConcat xs)
+
+myNElem :: [a] -> Int -> a
+myNElem l n =   aux l 1
+    where
+    aux (x:xs) c  |   (c == n)    =   x
+                  |   (c < n)    =   aux xs (c+1)
+
+myOrd :: (Ord a) => [a] -> Bool
+myOrd []        =   True
+myOrd (x:xs)    =   aux x xs
+    where
+    aux _ []        =   True
+    aux _ [a]       =   True
+    aux l (a:as)    |   (l <= a)     =   aux a as
+                    |   otherwise   =   False
+
+myNull :: [a] -> Bool
+myNull  []  =   True
+myNull  x   =   False
+
+{-
+ - sommare tutti gli elementi di una lista di interi
+ - trovare l'elemento piu' grande di una lista di interi
+ - eliminare gli elementi dupplicati da una lista ordinata
+ - eliminare gli elementi duplicati (suggeriment: usare elem)
+ - fare la take e la drop
+ -}
+
+
 
 
 
