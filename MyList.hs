@@ -76,3 +76,63 @@ myDuplicate2    :: Eq a => [a] -> [a]
 myDuplicate2 [] =   []
 myDuplicate2 (x:xs) |   myElem x xs =   myDuplicate2 xs
                     |   otherwise   =   x : (myDuplicate2 xs)
+
+myFilter    ::   (a -> Bool) -> [a] -> ([a],[a])
+myFilter p []       =   ([], [])
+myFilter p (x : xs) =   let (ys, zs) = myFilter p xs in
+                            if p x then (x : ys, zs)
+                            else        (ys, x : zs)
+
+permutations ::  [a] -> [[a]]
+permutations []         =   [[]]
+permutations (x : xs)   =   concat (map spalma (permutations xs))
+    where 
+    spalma []       =   [[x]]
+    spalma (y : ys) =   (x : y : ys) : prependAll y (spalma ys)
+
+    prependAll _ [] = []
+    prependAll x (y : ys) = (x : y) : prependAll x ys
+
+myFoldL ::  (t1 -> t -> t1) -> t1 -> [t] -> t1
+myFoldL f a []          =   a
+myFoldL f a (x : xs)    =   myFoldL f (a `f` x) xs
+
+myFoldR ::  (t -> t1 -> t1) -> t1 -> [t] -> t1
+myFoldR f a []          =   a
+myFoldR f a (x : xs)    =   x `f` myFoldR f a xs
+
+myFoldIdentity ::  [a] -> [a]
+myFoldIdentity xs = foldr (:) [] xs
+
+myFoldReverse ::  [a] -> [a]
+myFoldReverse xs = foldl snoc [] xs
+    where   snoc xs x = x : xs
+
+myFoldMax ::  Ord t => [t] -> t
+myFoldMax (x : [])  =   x
+myFoldMax (x : xs)  =   foldr max x xs
+
+myFoldLength ::  Num b => [a] -> b
+myFoldLength x   =   foldr (+) 0 (map (\x->1) x)
+
+{--
+ -
+ - fare le permutazioni
+ -
+ - tramite il fold implementare
+ -  * concatenation
+ -  * append
+--}
+
+
+
+
+{--
+ - FOLD SU LISTE:
+--  [a1,a2,...,an] -> a1 * a2 * ... * an
+--}
+
+-- foldLeft e' tail ricorsiva! fold Right no
+
+
+
