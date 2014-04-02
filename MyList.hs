@@ -115,6 +115,41 @@ myFoldMax (x : xs)  =   foldr max x xs
 myFoldLength ::  Num b => [a] -> b
 myFoldLength x   =   foldr (+) 0 (map (\x->1) x)
 
+mySumList   ::   Num a => [a] -> a
+mySumList   =   foldl ( \x -> \y -> x + y ) 0
+
+myProductList   ::   Num a => [a] -> a
+myProductList   =   foldl ( \x -> \y -> x * y ) 1
+
+myConcatList    ::   [[a]] -> [a]
+myConcatList    =   foldr ( \x -> \y -> x ++ y ) []
+
+myLengthList    ::   [a] -> Integer
+myLengthList    =   foldr (\x -> \y -> y + 1) 0
+
+myReverseList   ::   [a] -> [a]
+myReverseList   =   foldl   ( \x -> \y -> y : x ) []
+
+myMaxList   ::   Ord a => [a] -> a
+myMaxList   =   \(x : xs) ->  foldl ( \y -> \z -> max y z ) x xs
+
+myAnyList   ::   ( a -> Bool ) -> [a] -> Bool
+myAnyList   =   \f -> (foldr (\x -> \y -> (f x) || y) False)
+
+myAllList   ::   ( a -> Bool ) -> [a] -> Bool
+myAllList   =   \f-> (foldr (\x -> \y -> (f x) && y) True)
+
+--plus    ::   Integer -> Integer -> Integer
+-- "plus x y = x + y" viene tradotto da ghci in:
+-- plus funzione che preso x restituisce una funzione che preso
+-- y restituisce x + y
+-- questo spiega le definizioni di tipi di funzioni in haskell tramite -> 
+-- ( -> ) e' associativo a destra
+
+plus    ::   Integer -> Integer -> Integer
+plus    =   \x -> \y -> x + y
+
+
 {--
  -
  - fare le permutazioni

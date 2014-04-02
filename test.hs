@@ -7,6 +7,10 @@ import MyList
 -- il costrutto let _ e' un espressione
 -- il costrutto where puo' essere usato solo in definizioni di funzioni
 
+--  operatore `->` associativo a destra:
+--      a -> a -> a   ==   a -> (a -> a)
+
+
 divide	:: Integer -> Integer -> Bool
 cross	:: (a -> a1, b -> b1) -> (a, b) -> (a1, b1)
 chop	:: [a] -> [a]
@@ -245,6 +249,24 @@ foldn f a n 	= f (foldn f a (n-1))
 
 
 
+
+
+
+
+
+sinCos :: Bool -> Float -> Float
+--sinCos b x  =   if b then sin x else cos x
+--sinCos b x  =   (if b then sin else cos) x
+sinCos b    =   if b then sin else cos
+
+
+
+--  HASKELL ghci trasforma ogni funzione che prende un parametro
+--  in lampa Notazione
+
+successore :: Integer -> Integer
+--successore x    =   x + 1
+successore  =   \x -> x + 1
 
 
 
