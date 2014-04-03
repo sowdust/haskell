@@ -1,12 +1,13 @@
 module MyList where
 
-myLength :: [a] -> Integer
-myLength [] = 0
-myLength (_ : xs) = 1 + myLength xs
 
 append :: [a] -> [a] -> [a]
 append [] ys = ys
 append (x : xs) ys = x : append xs ys
+
+myLength :: [a] -> Integer
+myLength [] = 0
+myLength (_ : xs) = 1 + myLength xs
 
 myHead :: [a] -> a
 myHead (x:_) = x
@@ -27,6 +28,9 @@ myTail (x:xs)       =   xs
 myConcat :: [[a]] -> [a]
 myConcat [x]    = x
 myConcat (x:xs) = x ++ (myConcat xs)
+
+myConcatList2   ::   [[a]] -> [a]
+myConcatList2   =  \(x : xs) ->  foldl (++) x xs
 
 myNElem :: [a] -> Int -> a
 myNElem l n =   aux l 1
@@ -83,15 +87,6 @@ myFilter p (x : xs) =   let (ys, zs) = myFilter p xs in
                             if p x then (x : ys, zs)
                             else        (ys, x : zs)
 
-permutations ::  [a] -> [[a]]
-permutations []         =   [[]]
-permutations (x : xs)   =   concat (map spalma (permutations xs))
-    where 
-    spalma []       =   [[x]]
-    spalma (y : ys) =   (x : y : ys) : prependAll y (spalma ys)
-
-    prependAll _ [] = []
-    prependAll x (y : ys) = (x : y) : prependAll x ys
 
 myFoldL ::  (t1 -> t -> t1) -> t1 -> [t] -> t1
 myFoldL f a []          =   a
@@ -139,35 +134,36 @@ myAnyList   =   \f -> (foldr (\x -> \y -> (f x) || y) False)
 myAllList   ::   ( a -> Bool ) -> [a] -> Bool
 myAllList   =   \f-> (foldr (\x -> \y -> (f x) && y) True)
 
---plus    ::   Integer -> Integer -> Integer
--- "plus x y = x + y" viene tradotto da ghci in:
--- plus funzione che preso x restituisce una funzione che preso
--- y restituisce x + y
--- questo spiega le definizioni di tipi di funzioni in haskell tramite -> 
--- ( -> ) e' associativo a destra
 
-plus    ::   Integer -> Integer -> Integer
-plus    =   \x -> \y -> x + y
+forall    :: [a] -> (a -> a -> a) -> a -> [a]
+forall    [] _ _      = []
+forall    (x:xs) f a  = (f x a) : (forall xs f a)
 
+cicla :: [a] -> [a]
+cicla []        =   []
+cicla (x : xs)  =   xs ++ [x]
 
-{--
- -
- - fare le permutazioni
- -
- - tramite il fold implementare
- -  * concatenation
- -  * append
---}
+cicli :: [a] -> [[a]]
+cicli   []  =   [[]]
+cicli   l   =   faiciclare l (length l - 1)
+                where
+                faiciclare l n  |   (n==0)       = [cicla l]
+                                |   otherwise   =
+                                    [cicla l] ++ faiciclare (cicla l) (n-1)
+permutazioni :: [a] -> [[a]]
+permutazioni []             =   [[]]
+permutazioni (x : y : [])   =   cicli (x:y:[])
+permutazioni (x : xs)       =   ((foldr (++) []) . (map cicli))
+                                ( map (++ [x]) (permutazioni xs) )
 
+permutations ::  [a] -> [[a]]
+permutations []         =   [[]]
+permutations (x : xs)   =   concat (map spalma (permutations xs))
+    where 
+    spalma []       =   [[x]]
+    spalma (y : ys) =   (x : y : ys) : prependAll y (spalma ys)
 
-
-
-{--
- - FOLD SU LISTE:
---  [a1,a2,...,an] -> a1 * a2 * ... * an
---}
-
--- foldLeft e' tail ricorsiva! fold Right no
-
+    prependAll _ [] = []
+    prependAll x (y : ys) = (x : y) : prependAll x ys
 
 

@@ -4,13 +4,6 @@ import Data.Char (chr, ord)
 import MyList
 
 
--- il costrutto let _ e' un espressione
--- il costrutto where puo' essere usato solo in definizioni di funzioni
-
---  operatore `->` associativo a destra:
---      a -> a -> a   ==   a -> (a -> a)
-
-
 divide	:: Integer -> Integer -> Bool
 cross	:: (a -> a1, b -> b1) -> (a, b) -> (a1, b1)
 chop	:: [a] -> [a]
@@ -36,7 +29,6 @@ f2 ::  Integer -> [Integer]
 f3 ::  Integer -> [Integer]
 
 
-
 bottom = bottom
 
 fibo n = aux 0 1 n
@@ -45,20 +37,20 @@ fibo n = aux 0 1 n
         aux m _ 0 = m
         aux _ n 1 = n
         aux m n k = aux n (m + n) (k-1)
-
-
-
-
 {-
-fi n = [1,2,...,n]
-f2 n = [n,n-1,n-2,....,1]
-f3 n = [p1,p2,....,pk] dove p sono divisori di n
+
+    fi n = [1,2,...,n]
+    f2 n = [n,n-1,n-2,....,1]
+    f3 n = [p1,p2,....,pk] dove p sono divisori di n
 -}
 
 
 -- f2 complessita' costante in tempo perche' (:) costante
 -- lineare anche in spazio perche' ricorsione non e' in coda e quindi
--- si caricano n frame sullo stack - non puo' essere trasformato in iterativo
+-- si caricano n frame sullo stack - non puo' essere trasformato in 
+-- iterativo
+
+
 f2 0 = []
 f2 n = n:(f2 (n-1))
 
