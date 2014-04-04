@@ -87,7 +87,6 @@ myFilter p (x : xs) =   let (ys, zs) = myFilter p xs in
                             if p x then (x : ys, zs)
                             else        (ys, x : zs)
 
-
 myFoldL ::  (t1 -> t -> t1) -> t1 -> [t] -> t1
 myFoldL f a []          =   a
 myFoldL f a (x : xs)    =   myFoldL f (a `f` x) xs
@@ -165,5 +164,43 @@ permutations (x : xs)   =   concat (map spalma (permutations xs))
 
     prependAll _ [] = []
     prependAll x (y : ys) = (x : y) : prependAll x ys
+
+collapse :: String -> String
+collapse [] =   []
+collapse (x : y : [])   |   [x] == " " && [y] == " "  = " "
+                        |   otherwise               =  (x:y :[])
+collapse (x : y :xs)    |   [x]==" " && [y] ==" " =   collapse (x:xs)
+                        |   otherwise       =   x:(collapse (y:xs))
+
+decToHex :: Integer -> String
+decToHex x   =  aux x []
+                where
+                aux n l |   n < 16      = digitDec2Hex n ++ l
+                        |   otherwise   = aux (n `div` 16)  (digitDec2Hex (n `mod` 16) ++ l)
+
+digitDec2Hex ::  (Num a, Ord a, Show a) => a -> [Char]
+digitDec2Hex  n |   n == 15  =   "F"
+                |   n == 14  =   "E"
+                |   n == 13  =   "D"
+                |   n == 12  =   "C"
+                |   n == 11  =   "B"
+                |   n == 10  =   "A"
+                |   n < 10  =   show n
+
+digitHex2Dec ::  Char -> Integer
+digitHex2Dec x  |   x == 'A' || x == 'a'  = 10
+                |   x == 'B' || x == 'b'  = 11
+                |   x == 'C' || x == 'c'  = 12
+                |   x == 'D' || x == 'd'  = 13
+                |   x == 'E' || x == 'e'  = 14
+                |   x == 'F' || x == 'f'  = 15
+                |   otherwise = read [x] :: Integer
+
+hexToDec :: String -> Integer
+hexToDec x =    (trasf x (length x - 1))
+                where
+                    trasf [] _          =   0
+                    trasf (x : xs) n    =   digitHex2Dec x * (16 ^ n) + (trasf xs (n-1))
+
 
 

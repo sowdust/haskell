@@ -261,4 +261,33 @@ successore :: Integer -> Integer
 successore  =   \x -> x + 1
 
 
+--  alcune funzioni implementate nel linguaggio
+
+compose ::  (t1 -> t) -> (t2 -> t1) -> t2 -> t
+compose f g = \x -> f (g x)
+
+-- apply e' implementato nel linguaggio come ($)
+
+apply1 :: (t1 -> t) -> t1 -> t
+apply1 f x = f x
+
+apply2 ::  t -> t
+apply2 f = f
+
+apply3 ::  a -> a
+apply3 = id
+
+curry ::  ((a, b) -> c) -> a -> b -> c
+curry f     = \x -> \y -> f (x, y)
+
+uncurry ::  (a -> b -> c) -> (a, b) -> c
+uncurry f   = \(x,y) -> f x y
+
+plusu ::  Num a => (a, a) -> a
+plusu (x, y)    = x + y
+
+plusc ::  Num a => a -> a -> a
+plusc x y       = x + y
+
+
 
