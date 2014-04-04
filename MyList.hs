@@ -178,7 +178,7 @@ decToHex x   =  aux x []
                 aux n l |   n < 16      = digitDec2Hex n ++ l
                         |   otherwise   = aux (n `div` 16)  (digitDec2Hex (n `mod` 16) ++ l)
 
-digitDec2Hex ::  (Num a, Ord a, Show a) => a -> [Char]
+digitDec2Hex :: Integer -> String
 digitDec2Hex  n |   n == 15  =   "F"
                 |   n == 14  =   "E"
                 |   n == 13  =   "D"
