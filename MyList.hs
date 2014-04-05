@@ -206,8 +206,8 @@ hexToDec x =    (trasf x (length x - 1))
 decToHex :: Integer -> String
 decToHex x   =  aux x []
                 where
-                aux n l |   n < 16      = digitDec2Hex n ++ l
-                        |   otherwise   = aux (n `div` 16)  (digitDec2Hex (n `mod` 16) ++ l)
+                    aux n l |   n < 16      = digitDec2Hex n ++ l
+                            |   otherwise   = aux (n `div` 16)  (digitDec2Hex (n `mod` 16) ++ l)
 
 
 
