@@ -172,11 +172,12 @@ collapse (x : y : [])   |   [x] == " " && [y] == " "  = " "
 collapse (x : y :xs)    |   [x]==" " && [y] ==" " =   collapse (x:xs)
                         |   otherwise       =   x:(collapse (y:xs))
 
-decToHex :: Integer -> String
-decToHex x   =  aux x []
-                where
-                aux n l |   n < 16      = digitDec2Hex n ++ l
-                        |   otherwise   = aux (n `div` 16)  (digitDec2Hex (n `mod` 16) ++ l)
+collassa :: String -> String
+collassa [] = []
+collassa (x : [])       =   x : []
+collassa (' ':' ':[])   =   ' ':[]
+collassa (' ':' ': x)   =   collassa(' ' : x)
+collassa (x : y : xs)   =   x :(collassa (y  : xs))
 
 digitDec2Hex :: Integer -> String
 digitDec2Hex  n |   n == 15  =   "F"
@@ -201,6 +202,12 @@ hexToDec x =    (trasf x (length x - 1))
                 where
                     trasf [] _          =   0
                     trasf (x : xs) n    =   digitHex2Dec x * (16 ^ n) + (trasf xs (n-1))
+
+decToHex :: Integer -> String
+decToHex x   =  aux x []
+                where
+                aux n l |   n < 16      = digitDec2Hex n ++ l
+                        |   otherwise   = aux (n `div` 16)  (digitDec2Hex (n `mod` 16) ++ l)
 
 
 
