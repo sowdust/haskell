@@ -167,6 +167,7 @@ permutations (x : xs)   =   concat (map spalma (permutations xs))
 
 collapse :: String -> String
 collapse [] =   []
+collapse (x : [])       =   x : []
 collapse (x : y : [])   |   [x] == " " && [y] == " "  = " "
                         |   otherwise               =  (x:y :[])
 collapse (x : y :xs)    |   [x]==" " && [y] ==" " =   collapse (x:xs)
