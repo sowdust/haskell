@@ -175,7 +175,6 @@ collapse (x : y :xs)    |   [x]==" " && [y] ==" " =   collapse (x:xs)
 collassa :: String -> String
 collassa [] = []
 collassa (x : [])       =   x : []
-collassa (' ':' ':[])   =   ' ':[]
 collassa (' ':' ': x)   =   collassa(' ' : x)
 collassa (x : y : xs)   =   x :(collassa (y  : xs))
 
