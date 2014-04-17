@@ -1,8 +1,9 @@
 {-# LANGUAGE UnicodeSyntax #-}
 
 import Data.Char (chr, ord)
+import Data.List (elemIndex)
 import MyList
-
+import Algebra
 
 divide	:: Integer -> Integer -> Bool
 cross	:: (a -> a1, b -> b1) -> (a, b) -> (a1, b1)

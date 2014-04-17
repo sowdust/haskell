@@ -1,5 +1,8 @@
 module MyList where
 
+data List a =   Nil
+            |   Cons a (List a)
+    deriving (Show, Eq)
 
 append :: [a] -> [a] -> [a]
 append [] ys = ys
