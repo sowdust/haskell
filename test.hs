@@ -1,7 +1,6 @@
 {-# LANGUAGE UnicodeSyntax #-}
 
 import Data.Char (chr, ord)
-import Data.List (elemIndex)
 import MyList
 import Algebra
 
