@@ -173,16 +173,23 @@ leastB (Node n Empty _) =   n
 leastB (Node _ l _)     =   leastB l
 
 deleteB :: (Ord a, Eq a) => a -> Tree a -> Tree a
-deleteB _ Empty         =   Empty
-deleteB x (Node n l Empty)  |   x == n   =   l
+deleteB _ Empty             =   Empty
+deleteB x (Node n l Empty)  |   x == n       =   l
                             |   otherwise   =   Node n (deleteB x l) Empty
-
 deleteB x (Node n Empty r)  |   x == n       =   r
                             |   otherwise   =   Node n Empty (deleteB x r)
 deleteB x (Node n l r)      |   x < n   =   Node n (deleteB x l) r
                             |   x > n   =   Node n l (deleteB x r)
                             |   x == n   =   Node (leastB r) l (deleteB (leastB r) r)
-                                                
+
 
 treeB = Node 10 (Node 5 (Node 2 Empty Empty) (Node 7 Empty Empty) ) (Node 15 (Node 12 Empty Empty) (Node 18 Empty Empty))
 tree = Nodo 0 (Nodo 1 (Nodo 2 (Nodo 4 (Leaf 8) (Nodo 9 (Leaf 10) (Leaf 11) )) (Leaf 5)) (Nodo 3 (Leaf 6) (Leaf 7)) ) (Leaf 0)
+
+
+{--
+ -  ESERCIZI:
+ tmap :: (a -> b) -> Tree a -> Tree b
+ tfold :: (a -> b -> b -> b) -> b -> Tree a -> b
+
+ -}
