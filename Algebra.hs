@@ -110,28 +110,79 @@ idiv (Finite _) Infinite = Finite 0
 idiv Infinite Infinite = Undefined
 
 
-data Tree a =   Leaf a 
+data Valore =   I Int
+            |   S String
+    deriving (Show)
+
+
+data Tree a =   Empty
             |   Node a (Tree a) (Tree a)
-    deriving (Show,Eq)
+    deriving (Show, Eq)
 
-depth :: Tree a -> Integer
+
+data MyTree a   =   Leaf a 
+                |   Nodo a (MyTree a) (MyTree a)
+    
+{--
+data MyTree   =   Leaf a
+            |   Nodo (MyTree a) (MyTree a)
+
+data MyTree   =   Empty
+            |   Nodo a [MyTree a]
+--}
+
+
+depth :: MyTree a -> Integer
 depth (Leaf _)      =   1
-depth (Node _ b c)  =   max (depth b) (depth c) + 1
+depth (Nodo _ b c)  =   max (depth b) (depth c) + 1
 
-preorder :: Tree a -> [a]
+preorder :: MyTree a -> [a]
 preorder (Leaf a)       =   [a]
-preorder (Node a b c)   =   a : (preorder b) ++ (preorder c)
+preorder (Nodo a b c)   =   a : preorder b ++ preorder c
 
-postorder :: Tree a -> [a]
+postorder :: MyTree a -> [a]
 postorder (Leaf a)      =   [a]
-postorder (Node a b c)  =   (postorder b) ++ (postorder c) ++ [a]
+postorder (Nodo a b c)  =   postorder b ++ postorder c ++ [a]
 
-inorder :: Tree a -> [a]
+inorder :: MyTree a -> [a]
 inorder (Leaf a)        =   [a]
-inorder (Node a b c)    =   inorder b ++ a : (inorder c)
+inorder (Nodo a b c)    =   inorder b ++ a : inorder c
 
-member :: (Eq a) => a -> Tree a -> Bool
+member :: (Eq a) => a -> MyTree a -> Bool
 member a (Leaf b)       =   a == b
-member a (Node x b c)   =   x == a || (member a b) || (member a c)
+member a (Nodo x b c)   =   x == a || member a b || member a c
 
-tree = Node 0 (Node 1 (Node 2 (Node 4 (Leaf 8) (Node 9 (Leaf 10) (Leaf 11) )) (Leaf 5)) (Node 3 (Leaf 6) (Leaf 7)) ) (Leaf 0)
+labels :: Tree a -> [a]
+labels Empty        =   []
+labels (Node x l r) =   x : labels l ++ labels r
+
+memberB :: (Ord a, Eq a) => a -> Tree a -> Bool
+memberB _ Empty         =   False
+memberB a (Node x b c)  |   x == a   =   True
+                        |   a < x   =   memberB a b
+                        |   a > x   =   memberB a c
+
+insertB :: (Ord a, Eq a) => a -> Tree a -> Tree a
+insertB x Empty         =   Node x Empty Empty
+insertB x (Node n l r)  |   n == x   =   Node n l r
+                        |   x < n   =   Node n (insertB x l) r
+                        |   x > n   =   Node n l (insertB x r)   
+
+leastB :: (Ord a, Eq a) => Tree a -> a
+leastB (Node n Empty _) =   n
+leastB (Node _ l _)     =   leastB l
+
+deleteB :: (Ord a, Eq a) => a -> Tree a -> Tree a
+deleteB _ Empty         =   Empty
+deleteB x (Node n l Empty)  |   x == n   =   l
+                            |   otherwise   =   Node n (deleteB x l) Empty
+
+deleteB x (Node n Empty r)  |   x == n       =   r
+                            |   otherwise   =   Node n Empty (deleteB x r)
+deleteB x (Node n l r)      |   x < n   =   Node n (deleteB x l) r
+                            |   x > n   =   Node n l (deleteB x r)
+                            |   x == n   =   Node (leastB r) l (deleteB (leastB r) r)
+                                                
+
+treeB = Node 10 (Node 5 (Node 2 Empty Empty) (Node 7 Empty Empty) ) (Node 15 (Node 12 Empty Empty) (Node 18 Empty Empty))
+tree = Nodo 0 (Nodo 1 (Nodo 2 (Nodo 4 (Leaf 8) (Nodo 9 (Leaf 10) (Leaf 11) )) (Leaf 5)) (Nodo 3 (Leaf 6) (Leaf 7)) ) (Leaf 0)
