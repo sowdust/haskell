@@ -192,4 +192,7 @@ tree = Nodo 0 (Nodo 1 (Nodo 2 (Nodo 4 (Leaf 8) (Nodo 9 (Leaf 10) (Leaf 11) )) (L
  tmap :: (a -> b) -> Tree a -> Tree b
  tfold :: (a -> b -> b -> b) -> b -> Tree a -> b
 
+
+definire depth e labels usando tfold (non ricorsive!!)
+
  -}
