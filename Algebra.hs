@@ -2,24 +2,6 @@ module Algebra where
 
 import Data.List (elemIndex)
 
-{--
- - nome tipo dato (tutto lettere maiuscole): costruttori
- - come sono fatti i valori / costruire
- - meccanismo per analizzare / esaminare  valori
- -
- -
- -
- -
- -
- -
- -  i tipi di dati piu' semplici sono empty (nessun valore) e unit (un unico valore)
- -  questi tipi hanno senso nel momento in cui la funzione che li calcola ha dei 
- -  side effect. essendo che nei linguaggi lazy e' difficile implementare operazioni
- -  accessorie (side effect) nella libreria haskell NON ci sono funzioni che 
- -  ritornano tipo Unit. Per farlo si usano estensioni aggiuntive (eg Monadi)
- -
- -}
-
 data Boolean = F | T
 --  deriving (Show,Eq,Ord)
 
