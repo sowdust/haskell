@@ -3,6 +3,7 @@
 import Data.Char (chr, ord)
 import MyList
 import Algebra
+import Combinatori
 
 divide	:: Integer -> Integer -> Bool
 cross	:: (a -> a1, b -> b1) -> (a, b) -> (a1, b1)
