@@ -3,7 +3,6 @@ module Algebra where
 import Data.List (elemIndex)
 
 data Boolean = F | T
---  deriving (Show,Eq,Ord)
 
 instance Show Boolean where
     show T = "Vero"
