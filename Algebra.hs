@@ -23,7 +23,6 @@ myOr T _    =   T
 myOr F b    =   b
 
 
-
 data Cardinale = Nord | Sud | Ovest | Est
     deriving (Show, Eq)
 
@@ -36,11 +35,6 @@ giraSinistra Est    =   Nord
 tornaIndietro :: Cardinale -> Cardinale
 tornaIndietro = giraSinistra . giraSinistra
 
-{--
- - giorni della settimana:
- -  ieri
- -  domani
- -}
 
 data Giorni = Lun | Mar | Mer | Gio | Ven | Sab | Dom
     deriving (Show, Eq, Ord)
@@ -56,11 +50,6 @@ ieri g  =   case elemIndex g settimana of
 
 dopo    =   (.) domani
 
-
-
-{-
- - [Undefined, Infinite, Finite 0, Finite 1, Finite -1, ...]
- -}
 
 data INat   =   Finite Int
             |   Infinite
@@ -105,15 +94,6 @@ data Tree a =   Empty
 data MyTree a   =   Leaf a 
                 |   Nodo a (MyTree a) (MyTree a)
     
-{--
-data MyTree   =   Leaf a
-            |   Nodo (MyTree a) (MyTree a)
-
-data MyTree   =   Empty
-            |   Nodo a [MyTree a]
---}
-
-
 depth :: MyTree a -> Integer
 depth (Leaf _)      =   1
 depth (Nodo _ b c)  =   max (depth b) (depth c) + 1
