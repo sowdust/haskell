@@ -22,8 +22,28 @@ wrap :: String -> String
 wrap s = "(" ++ s ++ ")"
 
 
+evalExpr :: Float -> Expr -> Float
+evalExpr x X            =   x
+evalExpr x (Const n)    =   fromIntegral n
+evalExpr x (Add e f)    =   evalExpr x e + evalExpr x f
+evalExpr x (Sub e f)    =   evalExpr x e - evalExpr x f
+evalExpr x (Mul e f)    =   evalExpr x e * evalExpr x f
+evalExpr x (Div e f)    =   evalExpr x e / evalExpr x f
+evalExpr x (Pow e n)    =   evalExpr x e ** fromIntegral n
+
+
+derive :: Expr -> Expr
+derive (Const n)    =   Const 0
+derive X            =   Const 1
+derive (Pow e n)    =   Mul (Mul (Const n) (Pow e (n-1))) (derive e)
+derive (Add e f)    =   Add (derive e) (derive f)
+derive (Sub e f)    =   Sub (derive e) (derive f)
+derive (Mul e f)    =   Add (Mul (derive e) f) (Mul e (derive f))
+derive (Div e f)    =   Div (Sub (Mul (derive e) f) (Mul f (derive e))) (Pow f 2)
+
+
+expr =  Add (Pow X 2) (Add ( Mul (Const 2) X) (Const 1))
 
 
 
 
-expr = Add (Pow X 2) (Add (Mul (Const 2) X) (Const 1))
