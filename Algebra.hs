@@ -148,20 +148,26 @@ tmap _ Empty        =   Empty
 tmap f (Node n l r) =   Node (f n) (tmap f l) (tmap f r)
 
 tfold :: (a -> b -> b -> b) -> b -> Tree a -> b
-tfold _ b Empty                 =   b
-tfold f b (Node n l r)          =   f n (tfold f b l) (tfold f b r) 
+tfold _ b Empty         =   b
+tfold f b (Node n l r)  =   f n (tfold f b l) (tfold f b r) 
 
 sumFold :: (Num a) => Tree a -> a
-sumFold t   =   tfold (\x ->  \y -> \z -> x + y + z) 0 t
+sumFold     =   tfold (\x ->  \y -> \z -> x + y + z) 0 
 
 depthFold :: Tree a -> Integer
-depthFold t =   tfold (\x -> \y -> \z -> (1 + (max y z)) ) 0 t
+depthFold   =   tfold (\_ -> \y -> \z -> (1 + (max y z)) ) 0 
 
 labelsFold :: Tree a -> [a]
-labelsFold t    =   tfold (\x -> \y -> \z -> x : (y ++ z)) [] t
+labelsFold  =   tfold (\x -> \y -> \z -> x : (y ++ z)) [] 
 
 
-
+{-
+ - creare insieme vuoto
+ - creare insieme singoletto
+ - unionnione, intersezione, differenza
+ - member
+ - prodotto cartesiano
+ -}
 
 treeB = Node 10 (Node 5 (Node 2 Empty Empty) (Node 7 Empty Empty) ) (Node 15 (Node 12 Empty Empty) (Node 18 Empty Empty))
 tree = Nodo 0 (Nodo 1 (Nodo 2 (Nodo 4 (Leaf 8) (Nodo 9 (Leaf 10) (Leaf 11) )) (Leaf 5)) (Nodo 3 (Leaf 6) (Leaf 7)) ) (Leaf 0)
