@@ -41,8 +41,25 @@ derive (Sub e f)    =   Sub (derive e) (derive f)
 derive (Mul e f)    =   Add (Mul (derive e) f) (Mul e (derive f))
 derive (Div e f)    =   Div (Sub (Mul (derive e) f) (Mul f (derive e))) (Pow f 2)
 
+simplify :: Expr -> Expr
+simplify    (Add e f)   =   case (simplify e, simplify f) of
+                                (Const m, Const n) -> Const (m + n)
+                                (Const 0, f')   -> f'
+                                (e', Const 0)   -> e'
+                                (e', f')        -> Add e' f'
 
-expr =  Add (Pow X 2) (Add ( Mul (Const 2) X) (Const 1))
+
+
+{-
+ -
+ - FARE SIMPLIFY
+ -
+integrate :: Expr -> Expr
+integrate (Const n) =   Mul(Const n X)
+integrate X         =   Pow X (Const 2)
+ -}
+
+expr =  Add (Pow X (-2)) (Add ( Mul (Const 2) X) (Const 1))
 
 
 
