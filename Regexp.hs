@@ -33,13 +33,12 @@ derive c (Sec e f)  |   eps e       =   Or (derive c f) (Sec (derive c e) f)
 derive c (Star e)   =   Sec (derive c e) (Star e)
 
 is  ::   [Char] -> Regexp -> Bool
-is  _   Empty   =   False
 is  []  e       =   eps(e)
 is  (c:cs)  e   =   is cs (derive c e)
 
-isFold  ::   [Char] -> Regexp -> Bool
+--isFold  ::   [Char] -> Regexp -> Bool
 
-isFold  l   e   =   eps (foldl (\(x:xs)->->(derive x xs ) epsilo)) 
+--isFold  l   e   =   eps (foldl (\(x:xs)->->(derive x xs ) epsilo)) 
 
 {-
  -          a1 a2 ... an
