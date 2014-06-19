@@ -6,6 +6,7 @@ import Algebra
 import Combinatori
 import Espressioni
 import Regexp
+import EsEsame
 
 divide	:: Integer -> Integer -> Bool
 cross	:: (a -> a1, b -> b1) -> (a, b) -> (a1, b1)
@@ -292,5 +293,18 @@ plusu (x, y)    = x + y
 plusc ::  Num a => a -> a -> a
 plusc x y       = x + y
 
+
+
+
+
+mischia [] xs   =   xs
+mischia ys []   =   ys
+mischia (x:xs) (y:ys)   =   if x < y then x : (mischia xs (y:ys))
+                            else    y : (mischia (x:xs) ys)
+
+
+
+unfold p f g b  |   p b     =   []
+                | otherwise =   (f b) : (unfold p f g (g b))
 
 

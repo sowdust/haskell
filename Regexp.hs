@@ -45,6 +45,11 @@ is  (c:cs)  e   =   is cs (derive c e)
  -          eps = (D an ( ... (D a2 (D a1 E) ) ) ... )
  -}
 
+lmatch  []  e       =   e
+lmatch (s : ss) e   |   not (eps e)   =   e 
+                    |   otherwise   =   lmatch ss (derive s e)
+
+
 
 {--
  -  lmatch s e = (t, e') dove t è il piu lungo prefisso di s e e' è derivata di e rispetto a t
@@ -76,7 +81,7 @@ is  (c:cs)  e   =   is cs (derive c e)
 
 
 
-
+apiubs = Star(Or (Symbol 'a') (Symbol 'b'))
 empty   =   Empty
 epsilo  =   Epsilon
 espr    =   (Star (Or (Symbol 'a') (Sec (Symbol 'b') (Symbol 'c'))))
