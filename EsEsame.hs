@@ -67,9 +67,3 @@ es13 n = sum (divisori n 1) == n
 es13bis :: [Int]
 es13bis = filter es13 [1..]
 
-
-es14 :: String -> String 
-es14 s  =   half s (length s) 0
-    where
-        half (x:xs) n m |   n <= m       =   x:xs
-                        |   otherwise   =   half xs  (n-1) (m+1)
