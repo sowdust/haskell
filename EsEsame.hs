@@ -65,3 +65,7 @@ es13 n = sum (divisori n 1) == n
                             | n == 1 = 1:(divisori n 2)
                             | otherwise =  if n `mod` x == 0 then x:(divisori n (x+1)) else (divisori n (x+1))
 
+
+--  DA FARE:
+--  es13bis :: [Int]  Ritorna la lista di tutti i numeri perfetti
+--  farlo in modo che questa lista sia in effetti utilizzabile con take!
