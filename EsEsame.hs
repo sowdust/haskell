@@ -46,4 +46,30 @@ es10 (x:xs) = bilancia True 0 (x:xs)
             bilancia _ 0 (')':xs)   =   False
             bilancia b n ('(':xs)   =   b && (bilancia b (n+1) xs)
             bilancia b n (')':xs)   =   b && (bilancia b (n-1) xs)
-            
+
+
+es11 :: [a] -> [[a]]
+es11 []     =   [[]]
+es11 (x:xs) =   (map (\ys->(x:ys)) (es11 xs)) ++ (es11 xs)
+
+es12 :: [[a]] -> [[a]]
+es12 l   =   filter ( \x -> (length x >= maxl) ) l
+                    where maxl = maximum (map (\x-> (length x)) l)
+
+
+es13 :: Int -> Bool
+es13 n = sum (divisori n 1) == n
+        where
+            divisori :: Int -> Int -> [Int]
+            divisori n x    | x >  div n 2 = []
+                            | n == 1 = 1:(divisori n 2)
+                            | otherwise =  if n `mod` x == 0 then x:(divisori n (x+1)) else (divisori n (x+1))
+es13bis :: [Int]
+es13bis = filter es13 [1..]
+
+
+es14 :: String -> String 
+es14 s  =   half s (length s) 0
+    where
+        half (x:xs) n m |   n <= m       =   x:xs
+                        |   otherwise   =   half xs  (n-1) (m+1)

@@ -308,3 +308,6 @@ unfold p f g b  |   p b     =   []
                 | otherwise =   (f b) : (unfold p f g (g b))
 
 
+
+inn n [] = False
+inn n (x:xs) = if n==x then True else (inn n xs)
