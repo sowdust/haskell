@@ -64,6 +64,4 @@ es13 n = sum (divisori n 1) == n
             divisori n x    | x >  div n 2 = []
                             | n == 1 = 1:(divisori n 2)
                             | otherwise =  if n `mod` x == 0 then x:(divisori n (x+1)) else (divisori n (x+1))
-es13bis :: [Int]
-es13bis = filter es13 [1..]
 
