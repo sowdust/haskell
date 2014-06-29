@@ -49,7 +49,6 @@ simplify    (Add e f)   =   case (simplify e, simplify f) of
                                 (e', f')        -> Add e' f'
 
 
-
 {-
  -
  - FARE SIMPLIFY

@@ -8,7 +8,7 @@ import Espressioni
 import Regexp
 import EsEsame
 
-divide	:: Integer -> Integer -> Bool
+dividente	:: Integer -> Integer -> Bool
 cross	:: (a -> a1, b -> b1) -> (a, b) -> (a1, b1)
 chop	:: [a] -> [a]
 qsort	:: (Ord a) => [a] -> [a]
@@ -124,8 +124,8 @@ powm a n    |   n `mod` 2 == 0   = b `times` b
         b = a `powm` (n `div` 2)
 
 
-fibo_log n =    snd4 ( powm (1,1,1,0) n)
-    where       snd4 (_,x,_,_) = x
+fibo_log n =    second4 ( powm (1,1,1,0) n)
+    where       second4 (_,x,_,_) = x
 
 {-
     a b     k l    =      a*k + b*m     a*l + b*n
@@ -135,10 +135,10 @@ fibo_log n =    snd4 ( powm (1,1,1,0) n)
 times ::  Num t => (t, t, t, t) -> (t, t, t, t) -> (t, t, t, t)
 times (a,b,c,d) (k,l,m,n) = (a*k+b*m,a*l+b*n,c*k+d*m,c*l+d*n)
 
-cross(f, g)(x, y) = (f x, g y)
+--cross(f, g)(x, y) = (f x, g y)
 left (x , y ) = x
 right (x , y ) = y
-pair (f , g ) x = ( f x , g x )
+--pair (f , g ) x = ( f x , g x )
 
 --succ :: (Num a) => [a] -> [a]
 --succ xs = map (+ 1) xs
@@ -195,8 +195,8 @@ last_d n	| n == 0 = 0
 	where
 		r = mod n 10
 
-divide 0 _ = False
-ivide m n = n `mod` m == 0
+dividente 0 _ = False
+ividente m n = n `mod` m == 0
 
 mcd 0 n =	n
 mcd m n |	m < n =	mcd n m
@@ -279,7 +279,7 @@ apply2 ::  t -> t
 apply2 f = f
 
 apply3 ::  a -> a
-apply3 = id
+apply3 = ident
 
 curry ::  ((a, b) -> c) -> a -> b -> c
 curry f     = \x -> \y -> f (x, y)
@@ -311,3 +311,17 @@ unfold p f g b  |   p b     =   []
 
 inn n [] = False
 inn n (x:xs) = if n==x then True else (inn n xs)
+
+
+spezza [] = ([],[])
+spezza (x:xs) = let (l,r) = spezza xs in (x:r,l)
+
+unisci ([],ys) = ys
+unisci (x:xs,ys) = x:(unisci (ys,xs))
+
+
+ident = \x->x
+first (x,y) = x
+second (x,y) = y
+pair (f,g) x = (f x, g x)
+cross (f,g) = pair (f.first, g.second)

@@ -65,7 +65,16 @@ es13 n = sum (divisori n 1) == n
                             | n == 1 = 1:(divisori n 2)
                             | otherwise =  if n `mod` x == 0 then x:(divisori n (x+1)) else (divisori n (x+1))
 
-
+perfetti = filter es13 [1..]
 --  DA FARE:
 --  es13bis :: [Int]  Ritorna la lista di tutti i numeri perfetti
 --  farlo in modo che questa lista sia in effetti utilizzabile con take!
+
+fp n = aux n primes
+    where
+        aux n (x:xs)| mod n x == 0 = x:(aux (div n x)  (x:xs))
+                    |   otherwise = aux n xs
+
+from n = n:from (n+1)
+sieve (x:xs) = x : sieve [y | y <- xs, y `mod` x > 0]
+primes = sieve (from 2)

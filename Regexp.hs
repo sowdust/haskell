@@ -9,8 +9,8 @@ data Regexp     =   Empty
 instance Show Regexp where
     show Empty      =   "()"
     show Epsilon    =   "ε"
-    show (Symbol c) =   show c
-    show (Sec e f)  =   show e  ++ show f
+    show (Symbol c) =   show c 
+    show (Sec e f)  =   show e ++ "." ++ show f
     show (Star e)   =   "(" ++ show e ++ ")*"
     show (Or e f)   =   "(" ++ show e ++ " union " ++ show f ++ ")"
 
@@ -36,19 +36,12 @@ is  ::   [Char] -> Regexp -> Bool
 is  []  e       =   eps(e)
 is  (c:cs)  e   =   is cs (derive c e)
 
---isFold  ::   [Char] -> Regexp -> Bool
-
---isFold  l   e   =   eps (foldl (\(x:xs)->->(derive x xs ) epsilo)) 
-
-{-
- -          a1 a2 ... an
- -          eps = (D an ( ... (D a2 (D a1 E) ) ) ... )
- -}
+isFold  ::   [Char] -> Regexp -> Bool
+isFold l e = eps((foldl (\x xs -> derive xs x) e) l)
 
 lmatch  []  e       =   e
 lmatch (s : ss) e   |   not (eps e)   =   e 
                     |   otherwise   =   lmatch ss (derive s e)
-
 
 
 {--
